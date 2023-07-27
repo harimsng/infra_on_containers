@@ -1,1 +1,29 @@
 services:
+  nginx:
+    build:
+    container_name:
+    depends_on:
+
+      #      - wordpress
+    volumes:
+      -
+    ports:
+      - 443:443
+      #  wordpress:
+      #    image:
+      #    build:
+      #    container_name:
+      #    depends_on:
+      #    volume:
+      #    port:
+      #  mariadb:
+      #    image:
+      #    build:
+      #    container_name:
+      #    depends_on:
+      #    volume:
+      #    port:
+
+volume:
+
+network:
