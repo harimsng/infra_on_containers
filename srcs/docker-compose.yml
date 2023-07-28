@@ -3,7 +3,6 @@ services:
     build:
     container_name:
     depends_on:
-
       #      - wordpress
     volumes:
       -

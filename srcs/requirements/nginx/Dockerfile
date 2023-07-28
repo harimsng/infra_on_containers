@@ -6,6 +6,8 @@ RUN apt-get update -y && apt-get install -y \
 	openssl\
 	vim
 
+EXPOSE 8000/tcp
+
 WORKDIR /etc/nginx/
 
 RUN mkdir ssl
