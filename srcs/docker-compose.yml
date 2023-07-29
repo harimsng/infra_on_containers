@@ -1,11 +1,12 @@
 services:
   nginx:
     build:
-    container_name:
-    depends_on:
+      context: requirements/nginx
+    image:
+      nginx_image
+    container_name: nginx_container
+      #    depends_on:
       #      - wordpress
-    volumes:
-      -
     ports:
       - 443:443
       #  wordpress:
@@ -22,7 +23,3 @@ services:
       #    depends_on:
       #    volume:
       #    port:
-
-volume:
-
-network:

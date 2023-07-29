@@ -18,4 +18,4 @@ RUN openssl req -x509 -newkey rsa:4096 -keyout /etc/nginx/ssl/hseong.42.fr.key \
 COPY ./conf/nginx.conf ./
 COPY ./conf/hseong.42.fr.conf ./conf.d/
 
-WORKDIR /home/
+ENTRYPOINT ["nginx"]
