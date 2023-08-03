@@ -1,10 +1,8 @@
 FROM debian:buster
 
 RUN apt-get update -y && apt-get install -y \
-	net-tools\
 	nginx\
-	openssl\
-	vim
+	openssl
 
 EXPOSE 8000/tcp
 
@@ -16,6 +14,6 @@ RUN openssl req -x509 -newkey rsa:4096 -keyout /etc/nginx/ssl/hseong.42.fr.key \
 -subj "/C=XX/ST=Seoul/L=Seoul/O=42Seoul/CN=hseong.42.fr"
 
 COPY ./conf/nginx.conf ./
-COPY ./conf/hseong.42.fr.conf ./conf.d/
+COPY ./conf/conf.d/hseong.42.fr.conf ./conf.d/
 
 ENTRYPOINT ["nginx"]
