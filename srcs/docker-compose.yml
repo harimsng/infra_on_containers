@@ -5,21 +5,28 @@ services:
     image:
       nginx_image
     container_name: nginx_container
-      #    depends_on:
-      #      - wordpress
+    depends_on: wordpress
     ports:
       - 443:443
-      #  wordpress:
-      #    image:
-      #    build:
-      #    container_name:
-      #    depends_on:
-      #    volume:
-      #    port:
-      #  mariadb:
-      #    image:
-      #    build:
-      #    container_name:
-      #    depends_on:
-      #    volume:
-      #    port:
+    volume: wordpress_volume:/var/www/wordpress
+
+  wordpress:
+    build:
+      context: requirements/wordpress
+    image:
+      wordpress_image
+    container_name: wordpress_container
+    depends_on: mariadb
+    volume: wordpress_volume:/var/www/wordpress
+
+  mariadb:
+    build:
+      context: requirements/mariadb
+    image: mariadb_image
+    container_name: mariadb_container
+    volume:
+      /var/mariadb/:/var/mariadb/
+
+volumes:
+
+networks:
