@@ -13,4 +13,5 @@ COPY ./tools/starter.sh ./
 
 RUN mkdir mariadb
 
-ENTRYPOINT ["/bin/sh", "starter.sh"] 
+ENTRYPOINT ["bash"] 
+#ENTRYPOINT ["/bin/sh", "starter.sh"] 
