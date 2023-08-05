@@ -1,6 +1,16 @@
 FROM debian:buster
 
-RUN apt-get update -y && apt-get install -y
+EXPOSE 3306/tcp
+
+RUN apt-get update -y && apt-get install -y\
+	mariadb-client\
 	mariadb-server
 
-COPY ./conf/hseong.42.fr.conf /etc/mysql/mariadb.conf.d/
+WORKDIR /home
+
+COPY ./conf/.my.cnf /root/
+COPY ./tools/starter.sh ./
+
+RUN mkdir mariadb
+
+ENTRYPOINT ["/bin/sh", "starter.sh"] 

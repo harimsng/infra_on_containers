@@ -1,5 +1,7 @@
 FROM debian:buster
 
+EXPOSE 3306/tcp 8000/tcp
+
 RUN apt-get update -y && apt-get install -y \
 	curl\
 	php7.3-fpm
@@ -18,7 +20,7 @@ WORKDIR /etc/php/7.3/fpm
 COPY ./conf/php-fpm/php.ini ./
 COPY ./conf/php-fpm/pool.d/wordpress_pool.conf ./pool.d/
 
-RUN php /home/wp-cli.phar core download --path=/var/www/wordpress_dir
+RUN php /home/wp-cli.phar --allow-root core download --path=/home/wordpress_dir
 
 #COPY ./conf/wordpress/
 

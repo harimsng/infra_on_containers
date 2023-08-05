@@ -2,31 +2,36 @@ services:
   nginx:
     build:
       context: requirements/nginx
-    image:
-      nginx_image
+    image: nginx_image
     container_name: nginx_container
-    depends_on: wordpress
+    depends_on:
+      - wordpress
     ports:
       - 443:443
-    volume: wordpress_volume:/var/www/wordpress
+    volumes:
+      - wordpress_volume:/home/wordpress
 
   wordpress:
     build:
       context: requirements/wordpress
-    image:
-      wordpress_image
+    image: wordpress_image
     container_name: wordpress_container
-    depends_on: mariadb
-    volume: wordpress_volume:/var/www/wordpress
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress_volume:/home/wordpress
 
   mariadb:
     build:
       context: requirements/mariadb
     image: mariadb_image
     container_name: mariadb_container
-    volume:
-      /var/mariadb/:/var/mariadb/
+    volumes:
+      - db_volume:/home/mariadb/
 
 volumes:
+  wordpress_volume:
+    external: true
 
-networks:
+  db_volume:
+    external: true

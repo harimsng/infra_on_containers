@@ -1,10 +1,10 @@
 FROM debian:buster
 
+EXPOSE 8000/tcp
+
 RUN apt-get update -y && apt-get install -y \
 	nginx\
 	openssl
-
-EXPOSE 8000/tcp
 
 WORKDIR /etc/nginx/
 
