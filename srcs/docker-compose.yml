@@ -4,8 +4,10 @@ services:
       context: requirements/nginx
     image: nginx_image
     container_name: nginx_container
+    #restart: on-failure
     depends_on:
-      - wordpress
+      wordpress:
+        condition: service_completed_successfully
     ports:
       - 443:443
     volumes:
@@ -16,8 +18,10 @@ services:
       context: requirements/wordpress
     image: wordpress_image
     container_name: wordpress_container
+    #restart: on-failure
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_completed_successfully
     volumes:
       - wordpress_volume:/home/wordpress
 
@@ -25,6 +29,7 @@ services:
     build:
       context: requirements/mariadb
     image: mariadb_image
+    #restart: on-failure
     container_name: mariadb_container
     volumes:
       - db_volume:/home/mariadb/
