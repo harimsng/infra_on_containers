@@ -1,0 +1,9 @@
+1. use root only to create normal user and configure for programs to work with normal user.
+
+2. test DB in local container and remote container after local.
+
+3. test nginx fastcgi in local container and remote container after local.
+
+4. test nginx with various URL input(without .php, only with slash, ...).
+
+5. test nginx, wordpress(php-fpm) and DB in a container and split those into containers.

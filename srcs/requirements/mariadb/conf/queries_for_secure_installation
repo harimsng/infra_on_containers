@@ -1,0 +1,14 @@
+# Set the root password
+do_query "UPDATE mysql.user SET Password=PASSWORD('$esc_pass') WHERE User='root';"
+
+# Remove anonymous users
+do_query "DELETE FROM mysql.user WHERE User='';"
+
+# Disallow remote root login
+do_query "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
+
+# Remove test database
+do_query "DROP DATABASE IF EXISTS test;"
+
+# Reload privilege tables
+do_query "FLUSH PRIVILEGES;"
