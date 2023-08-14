@@ -1,17 +1,23 @@
 FROM debian:buster
 
-EXPOSE 3306/tcp
-
 RUN apt-get update -y && apt-get install -y\
 	mariadb-client\
 	mariadb-server
 
-WORKDIR /home
+RUN groupadd db_group\
+	&& useradd -g db_group db_user
+#USER db_user:db_group
 
-COPY ./conf/.my.cnf /root/
-COPY ./tools/starter.sh ./
+WORKDIR /home/db_user/
+
+RUN
+
+COPY ./conf/.my.cnf ./
+COPY ./tools/mariadb_entrypoint.sh ./
 
 RUN mkdir mariadb
 
-ENTRYPOINT ["bash"] 
-#ENTRYPOINT ["/bin/sh", "starter.sh"] 
+EXPOSE 3306/tcp
+
+ENTRYPOINT ["bash"]
+#ENTRYPOINT ["/bin/sh", "mariadb_entrypoint.sh"]

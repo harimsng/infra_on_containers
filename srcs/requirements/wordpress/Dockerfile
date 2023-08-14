@@ -1,7 +1,5 @@
 FROM debian:buster
 
-EXPOSE 3306/tcp 8000/tcp
-
 RUN apt-get update -y && apt-get install -y \
 	curl\
 	php7.3-fpm
@@ -9,19 +7,22 @@ RUN apt-get update -y && apt-get install -y \
 WORKDIR /home
 
 # Downloads wordpress cli
-RUN	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN php wp-cli.phar --info
+RUN	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar\
+	&& php wp-cli.phar --info
 
-WORKDIR /etc/php/7.3/fpm
+WORKDIR 
+COPY ./conf/php-fpm/php.ini /etc/php/7.3/fpm
+COPY ./conf/php-fpm/pool.d/wordpress_pool.conf /etc/php/7.3/fpm/pool.d/
 
-#RUN groupadd wordpress_user
-#RUN useradd -g wordpress_user wordpress_user
+RUN groupadd wordpress_group\
+	&& useradd -g wordpress_group wordpress_user
+USER wordpress_user:wordpress_group
 
-COPY ./conf/php-fpm/php.ini ./
-COPY ./conf/php-fpm/pool.d/wordpress_pool.conf ./pool.d/
-
-RUN php /home/wp-cli.phar --allow-root core download --path=/home/wordpress_dir
+#RUN php /home/wp-cli.phar --allow-root core download --path=/home/wordpress_dir
+RUN php /home/wp-cli.phar core download --path=/home/wordpress_dir
 
 #COPY ./conf/wordpress/
+
+EXPOSE 3306/tcp 8000/tcp
 
 #ENTRYPOINT ["
