@@ -4,35 +4,40 @@ services:
       context: requirements/nginx
     image: nginx_image
     container_name: nginx_container
-    #restart: on-failure
+    restart: always #unless-stopped
     depends_on:
       wordpress:
         condition: service_completed_successfully
     ports:
       - 443:443
     volumes:
-      - wordpress_volume:/home/wordpress
+      - wordpress_volume
 
   wordpress:
     build:
       context: requirements/wordpress
     image: wordpress_image
     container_name: wordpress_container
-    #restart: on-failure
+    restart: always #unless-stopped
     depends_on:
       mariadb:
         condition: service_completed_successfully
     volumes:
-      - wordpress_volume:/home/wordpress
+      - wordpress_volume
 
   mariadb:
     build:
       context: requirements/mariadb
     image: mariadb_image
-    #restart: on-failure
+    restart: always #unless-stopped
     container_name: mariadb_container
     volumes:
-      - db_volume:/home/mariadb/
+      - db_volume
+    env:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_RANDOM_ROOT_PASSWORD=${DB_RANDOM_ROOT_PASSWORD}
 
 volumes:
   wordpress_volume:

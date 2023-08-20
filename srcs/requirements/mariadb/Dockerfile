@@ -1,23 +1,25 @@
 FROM debian:buster
 
-RUN apt-get update -y && apt-get install -y\
-	mariadb-client\
-	mariadb-server
+EXPOSE 3306/tcp
 
-RUN groupadd db_group\
-	&& useradd -g db_group db_user
-#USER db_user:db_group
+# create system group and user to make their IDs get assigned consistently
+RUN groupadd -r mysql && useradd -r -g mysql mysql
 
-WORKDIR /home/db_user/
+RUN apt-get update -y && apt-get install -y \
+	mariadb-client \
+	mariadb-server \
+	&& rm -rf /var/lib/mysql; \
+	&& mkdir -p /var/lib/mysql /var/run/mysqld \
+	&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
+	#&& chmod 777 /var/run/mysqld  #why this line should be included?
 
-RUN
+
+WORKDIR /home/mysql/
+RUN mkdir db
 
 COPY ./conf/.my.cnf ./
 COPY ./tools/mariadb_entrypoint.sh ./
 
-RUN mkdir mariadb
+USER mysql:mysql
 
-EXPOSE 3306/tcp
-
-ENTRYPOINT ["bash"]
-#ENTRYPOINT ["/bin/sh", "mariadb_entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "mariadb_entrypoint.sh"]
