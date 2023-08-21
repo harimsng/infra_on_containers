@@ -1,0 +1,2 @@
+mysql_install_db
+mysqld_safe --user=mysql --datadir='/var/lib/mysql' #it runs on foreground. no need to execute mariadb client to keep container alive.
