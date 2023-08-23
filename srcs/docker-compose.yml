@@ -32,7 +32,7 @@ services:
     restart: always #unless-stopped
     container_name: mariadb_container
     volumes:
-      - db_volume
+      - db_volume:/var/lib/mysql/
     env:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
