@@ -1,28 +1,28 @@
 FROM debian:buster
 
+EXPOSE 3306/tcp 8000/tcp
+
+RUN groupadd wp && useradd -g wp wp
+
 RUN apt-get update -y && apt-get install -y \
 	curl\
 	php7.3-fpm
+	php7.3-mysql
 
-WORKDIR /home
+WORKDIR /home/wp
 
 # Downloads wordpress cli
 RUN	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar\
 	&& php wp-cli.phar --info
 
-WORKDIR 
-COPY ./conf/php-fpm/php.ini /etc/php/7.3/fpm
-COPY ./conf/php-fpm/pool.d/wordpress_pool.conf /etc/php/7.3/fpm/pool.d/
+#COPY ./conf/php-fpm/php.ini /etc/php/7.3/fpm
+#COPY ./conf/php-fpm/pool.d/wordpress_pool.conf /etc/php/7.3/fpm/pool.d/
 
-RUN groupadd wordpress_group\
-	&& useradd -g wordpress_group wordpress_user
-USER wordpress_user:wordpress_group
+USER wp:wp
 
-#RUN php /home/wp-cli.phar --allow-root core download --path=/home/wordpress_dir
-RUN php /home/wp-cli.phar core download --path=/home/wordpress_dir
+ENTRYPOINT ["/bin/sh", "wordpress_entrypoint.sh"]
+
 
 #COPY ./conf/wordpress/
-
-EXPOSE 3306/tcp 8000/tcp
 
 #ENTRYPOINT ["

@@ -8,7 +8,6 @@ RUN groupadd -r mysql && useradd -r -g mysql mysql
 RUN apt-get update -y && apt-get install -y \
 	mariadb-client-10.3 \
 	mariadb-server-10.3 \
-	procps \
 	&& mkdir -p /var/lib/mysql /var/run/mysqld \
 	&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
 	&& chmod 777 /var/run/mysqld
