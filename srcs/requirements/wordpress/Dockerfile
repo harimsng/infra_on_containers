@@ -21,6 +21,8 @@ COPY ./tools/wordpress_entrypoint.sh ./
 #COPY ./conf/php-fpm/php.ini /etc/php/7.3/fpm
 #COPY ./conf/php-fpm/pool.d/wordpress_pool.conf /etc/php/7.3/fpm/pool.d/
 
+USER wp:wp
+
 ENTRYPOINT ["/bin/sh", "wordpress_entrypoint.sh"]
 
 #COPY ./conf/wordpress/

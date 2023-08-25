@@ -24,4 +24,5 @@ kill $!
 wait $!
 
 #TODO: error log
-exec mysqld_safe --user=mysql --bind-address=0.0.0.0
+exec bash
+#exec mysqld_safe --user=mysql --bind-address=0.0.0.0

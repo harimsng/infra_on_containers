@@ -18,7 +18,7 @@ RUN set -e \
 	-subj "/C=XX/ST=Seoul/L=Seoul/O=42Seoul/CN=hseong.42.fr"
 
 COPY ./conf/nginx.conf ./
-COPY ./conf/conf.d/hseong.42.fr.conf ./conf.d/
+COPY ./conf/hseong.42.fr.conf ./conf.d/
 
 ENTRYPOINT ["bash"]
 #ENTRYPOINT ["nginx"]
