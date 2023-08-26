@@ -2,7 +2,7 @@ services:
   nginx:
     build:
       context: requirements/nginx
-    image: nginx_image
+    image: nginx
     container_name: nginx_container
     restart: always #unless-stopped
     depends_on:
@@ -11,26 +11,27 @@ services:
     ports:
       - 443:443
     volumes:
-      - wordpress_volume
+      - wp_volume:/var/www/html/
 
   wordpress:
     build:
       context: requirements/wordpress
-    image: wordpress_image
+    image: wordpress
     container_name: wordpress_container
     restart: always #unless-stopped
     depends_on:
       mariadb:
         condition: service_completed_successfully
     volumes:
-      - wordpress_volume
+      - wp_volume:/var/www/html/
 
   mariadb:
     build:
       context: requirements/mariadb
-    image: mariadb_image
-    restart: always #unless-stopped
+    image: mariadb
+      #TODO: container name resolves to IP. hardcoded container name must be fixed.
     container_name: mariadb_container
+    restart: always #unless-stopped
     volumes:
       - db_volume:/var/lib/mysql/
     env:
@@ -40,8 +41,11 @@ services:
       - DB_RANDOM_ROOT_PASSWORD=${DB_RANDOM_ROOT_PASSWORD}
 
 volumes:
-  wordpress_volume:
-    external: true
+  wp_volume:
+    type: bind
 
   db_volume:
-    external: true
+    type: bind
+
+network:
+  wp-net:
