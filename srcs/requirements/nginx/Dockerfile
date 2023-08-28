@@ -20,5 +20,4 @@ RUN set -e \
 COPY ./conf/nginx.conf ./
 COPY ./conf/hseong.42.fr.conf ./conf.d/
 
-ENTRYPOINT ["bash"]
-#ENTRYPOINT ["nginx"]
+ENTRYPOINT ["nginx"]
