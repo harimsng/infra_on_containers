@@ -1,3 +1,0 @@
-use wp;
-show tables;
-select * from wp_users;

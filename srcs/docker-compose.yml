@@ -1,51 +1,78 @@
+version: "3"
+
 services:
   nginx:
     build:
-      context: requirements/nginx
-    image: nginx
+      context: ./requirements/nginx
     container_name: nginx_container
     restart: always #unless-stopped
     depends_on:
       wordpress:
-        condition: service_completed_successfully
+        condition: service_healthy
     ports:
-      - 443:443
+      - 4433:443
     volumes:
       - wp_volume:/var/www/html/
+    networks:
+      - wp-net
 
   wordpress:
     build:
-      context: requirements/wordpress
-    image: wordpress
+      context: ./requirements/wordpress
     container_name: wordpress_container
     restart: always #unless-stopped
     depends_on:
       mariadb:
-        condition: service_completed_successfully
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "service", "php7.3-fpm", "status"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 20s
     volumes:
       - wp_volume:/var/www/html/
+    networks:
+      - wp-net
+    env_file: .env
 
   mariadb:
+    #TODO: image name
     build:
-      context: requirements/mariadb
-    image: mariadb
+      context: ./requirements/mariadb
       #TODO: container name resolves to IP. hardcoded container name must be fixed.
     container_name: mariadb_container
     restart: always #unless-stopped
+    healthcheck:
+      test: ["CMD", "service", "mysql", "status"]
+      interval: 15s
+      timeout: 15s
+      retries: 3
+      start_period: 15s
     volumes:
       - db_volume:/var/lib/mysql/
-    env:
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_RANDOM_ROOT_PASSWORD=${DB_RANDOM_ROOT_PASSWORD}
+    networks:
+      - wp-net
+    env_file: .env
 
 volumes:
   wp_volume:
-    type: bind
+    driver: local
+    driver_opts:
+      o: "bind"
+      type: "none"
+      device: "/home/hseong/data/wp"
+    name: "wp_volume"
 
   db_volume:
-    type: bind
+    driver: local
+    driver_opts:
+      o: "bind"
+      type: "none"
+      device: "/home/hseong/data/db"
+    name: "db_volume"
 
-network:
+networks:
   wp-net:
+    driver: "bridge"
+    name: "wp-net"

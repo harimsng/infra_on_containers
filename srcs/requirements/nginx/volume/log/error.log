@@ -1,5 +1,0 @@
-2023/08/25 04:59:53 [error] 23#23: *1 directory index of "/home/nginx/volume/data/" is forbidden, client: 172.18.0.1, server: hseong.42.fr, request: "GET / HTTP/1.1", host: "localhost:4433"
-2023/08/25 05:00:39 [error] 39#39: *1 directory index of "/home/nginx/volume/data/" is forbidden, client: 172.18.0.1, server: hseong.42.fr, request: "GET / HTTP/1.1", host: "localhost:4433"
-2023/08/25 05:00:59 [error] 53#53: *1 directory index of "/home/nginx/volume/data/" is forbidden, client: 172.18.0.1, server: hseong.42.fr, request: "GET / HTTP/1.1", host: "localhost:4433"
-2023/08/25 05:02:23 [error] 22#22: *1 directory index of "/home/nginx/volume/data/" is forbidden, client: 172.18.0.1, server: hseong.42.fr, request: "GET / HTTP/1.1", host: "localhost:4433"
-2023/08/25 05:06:28 [error] 48#48: *4 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.1, server: hseong.42.fr, request: "GET /index.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:4433"

@@ -24,6 +24,4 @@ COPY ./conf/php.ini /etc/php/7.3/fpm/
 COPY ./conf/php-fpm.conf /etc/php/7.3/fpm/
 COPY ./conf/wp.conf /etc/php/7.3/fpm/pool.d/
 
-USER wp:wp
-
 ENTRYPOINT ["/bin/sh", "wordpress_entrypoint.sh"]

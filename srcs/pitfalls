@@ -1,0 +1,8 @@
+OS User Account
+use root user for initialization and confiuration
+use specialized user for application running
+	except root user is required to run master process and non-root user who should be configured properly is required for worker process.
+
+DB, WP User Configuration
+create DB user with its host being address or name of WP container.
+configure WP for wp-config.conf to have exact DB user, DB host and so on.

@@ -17,6 +17,5 @@ RUN /usr/bin/mysql_install_db --skip-test-db --user=mysql
 WORKDIR /home/mysql/
 
 COPY ./tools/mariadb_entrypoint.sh ./
-COPY ./.env ./
 
 ENTRYPOINT ["/bin/sh", "mariadb_entrypoint.sh"]
