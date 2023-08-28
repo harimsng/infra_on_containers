@@ -1,37 +1,10 @@
-SERVICES	= mariadb\
-			  wordpress\
-			  nginx
+COMPOSE		=	srcs/docker-compose.yml
 
-MAIN_COMPOSE= srcs/docker-compose.yml
-
-VOLUMES_ROOT= $(HOME)/data
-VOLUMES		= wordpress\
-			  db
-VOLUMES_OPT	= -o type=none -o o=bind -o device=$<
-
-#
-up: $(VOLUMES) #$(NETWORKS)
-	docker compose -f $(MAIN_COMPOSE) -d up
+up:
+	@cd srcs && docker compose up -d
+	@echo "docker compose up completed"
 
 down:
-	docker compose -f $(MAIN_COMPOSE) down
+	@cd srcs && docker compose down
 
-$(SERVICES): $(VOLUMES) #$(NETWORKS)
-	docker compose -f $(MAIN_COMPOSE) up $@
-
-# volumes
-$(VOLUMES): %: $(VOLUMES_ROOT)/%/
-	docker volume create $(VOLUMES_OPT) $@_volume 
-
-$(VOLUMES_ROOT)/*: $(VOLUMES_ROOT)
-	mkdir $@
-
-$(VOLUMES_ROOT):
-	mkdir $@
-
-# networks
-#(NETWORKS):
-#	docker network create
-
-#
-.PHONY: all
+.PHONY: all up down

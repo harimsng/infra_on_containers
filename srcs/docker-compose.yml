@@ -29,7 +29,7 @@ services:
       interval: 30s
       timeout: 30s
       retries: 3
-      start_period: 20s
+      start_period: 30s
     volumes:
       - wp_volume:/var/www/html/
     networks:
