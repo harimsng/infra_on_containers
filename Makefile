@@ -13,4 +13,7 @@ ${VOLUMES}:
 down:
 	@cd srcs && docker compose down
 
-.PHONY: all up down
+clean: down
+	sudo rm -rf ${VOLUMES}
+
+.PHONY: all up down clean
