@@ -4,8 +4,9 @@ services:
   nginx:
     build:
       context: ./requirements/nginx
+    image: nginx:1.0
     container_name: nginx_container
-    restart: always #unless-stopped
+    restart: always
     depends_on:
       wordpress:
         condition: service_healthy
@@ -19,17 +20,18 @@ services:
   wordpress:
     build:
       context: ./requirements/wordpress
+    image: wordpress:1.0
     container_name: wordpress_container
-    restart: always #unless-stopped
+    restart: always
     depends_on:
       mariadb:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "service", "php7.3-fpm", "status"]
-      interval: 30s
+      interval: 30s 
       timeout: 30s
       retries: 3
-      start_period: 30s
+      start_period: 15s
     volumes:
       - wp_volume:/var/www/html/
     networks:
@@ -37,18 +39,17 @@ services:
     env_file: .env
 
   mariadb:
-    #TODO: image name
     build:
       context: ./requirements/mariadb
-      #TODO: container name resolves to IP. hardcoded container name must be fixed.
+    image: mariadb:1.0
     container_name: mariadb_container
-    restart: always #unless-stopped
+    restart: always
     healthcheck:
       test: ["CMD", "service", "mysql", "status"]
       interval: 15s
       timeout: 15s
       retries: 3
-      start_period: 15s
+      start_period: 5s
     volumes:
       - db_volume:/var/lib/mysql/
     networks:

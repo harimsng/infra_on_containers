@@ -1,10 +1,8 @@
-COMPOSE		=	srcs/docker-compose.yml
-
 VOLUMES		=	${HOME}/data/wp\
 			${HOME}/data/db
 
 up: ${VOLUMES}
-	@cd srcs && docker compose up -d
+	@cd srcs && docker compose up --build
 	@echo "docker compose up completed"
 
 ${VOLUMES}:
