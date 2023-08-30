@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 EXPOSE 3306/tcp
 
@@ -6,16 +6,16 @@ EXPOSE 3306/tcp
 RUN groupadd -r mysql && useradd -r -g mysql mysql
 
 RUN apt-get update -y && apt-get install -y \
-	mariadb-client-10.3 \
-	mariadb-server-10.3 \
+	gettext \
+	mariadb-client-10.5 \
+	mariadb-server-10.5 \
 	&& mkdir -p /var/lib/mysql /var/run/mysqld \
 	&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
 	&& chmod 777 /var/run/mysqld
 
 RUN /usr/bin/mysql_install_db --skip-test-db --user=mysql
 
-WORKDIR /home/mysql/
+COPY ./conf/debian.cnf /etc/mysql/debian.cnf.temp
+COPY ./tools/mariadb_entrypoint.sh /home/mysql/
 
-COPY ./tools/mariadb_entrypoint.sh ./
-
-ENTRYPOINT ["/bin/sh", "mariadb_entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "/home/mysql/mariadb_entrypoint.sh"]

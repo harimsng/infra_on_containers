@@ -1,9 +1,12 @@
 #!/bin/sh
 
+envsubst < /etc/mysql/debian.cnf.temp > /etc/mysql/debian.cnf
+rm /etc/mysql/debian.cnf.temp
+
 # start temporary server
 mysqld&
-service mysql status
-while [ $? = 3 ]; do sleep 1; service mysql status; done
+service mariadb status
+while [ $? = 3 ]; do sleep 1; service mariadb status; done
 
 mysql <<EOF
 SET old_passwords=0;

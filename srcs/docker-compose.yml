@@ -27,7 +27,7 @@ services:
       mariadb:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "service", "php7.3-fpm", "status"]
+      test: ["CMD", "service", "php7.4-fpm", "status"]
       interval: 30s 
       timeout: 30s
       retries: 3
@@ -45,7 +45,7 @@ services:
     container_name: mariadb_container
     restart: always
     healthcheck:
-      test: ["CMD", "service", "mysql", "status"]
+      test: ["CMD", "service", "mariadb", "status"]
       interval: 15s
       timeout: 15s
       retries: 3

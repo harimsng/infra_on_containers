@@ -1,0 +1,7 @@
+[client]
+host     = localhost
+user     = root
+password = ${DB_ROOT_PASSWD}
+[mysql_upgrade]
+host     = localhost
+user     = root
