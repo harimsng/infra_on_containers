@@ -4,7 +4,7 @@ services:
   nginx:
     build:
       context: ./requirements/nginx
-    image: nginx:1.0
+    image: nginx:inception-1.0
     container_name: nginx_container
     restart: always
     depends_on:
@@ -20,7 +20,7 @@ services:
   wordpress:
     build:
       context: ./requirements/wordpress
-    image: wordpress:1.0
+    image: wordpress:inception-1.0
     container_name: wordpress_container
     restart: always
     depends_on:
@@ -41,7 +41,7 @@ services:
   mariadb:
     build:
       context: ./requirements/mariadb
-    image: mariadb:1.0
+    image: mariadb:inception-1.0
     container_name: mariadb_container
     restart: always
     healthcheck:

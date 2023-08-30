@@ -1,7 +1,7 @@
 VOLUMES		=	${HOME}/data/wp\
 				${HOME}/data/db
 
-#TODO: add -d option
+#TODO: env
 up: ${VOLUMES}
 	@cd srcs && docker compose up -d --build
 	@echo "docker compose up completed"
