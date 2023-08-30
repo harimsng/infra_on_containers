@@ -1,4 +1,0 @@
-bind mount to /var/lib/mysql doesn't work because that directory require case sensitive and filename of MACOS is case insensitive. it'll work on linux OS on VM.
-
-wordpress host address on URL is localhost:8000 because there's no DNS and I can't write to /etc/hosts file for local DNS without root permission.
-VM will resolve this.
